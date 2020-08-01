@@ -2,9 +2,11 @@ import java.util.Random;
 class snakeAndLadder{
 	Random rand = new Random();
 
-	//variable declaration
+	//variable declaration and Constants
 	int currentPosition=0;
 	int diceResult=0;
+	int WINNINGPOSITION=100;
+
 	public static void main(String args[]){
 
 		snakeAndLadder obj=new snakeAndLadder();
@@ -18,27 +20,32 @@ class snakeAndLadder{
 	}
 
 	public int checkOptions(){
-		//checkOptionsForPlay will tell that player got snake, ladder or No play
-		int checkOptionsForPlay = (rand.nextInt(3)); 
-		if(checkOptionsForPlay==0){
-			System.out.println("No play");
+		//Here Player wont stop untill it's current Position is 100
+		while(currentPosition!= WINNINGPOSITION){
 
-		}else if(checkOptionsForPlay==1){
-			System.out.println("You got Snake");
-			diceResult=dieRoll();
+			//checkOptionsForPlay will tell that player got snake, ladder or No play
+			int checkOptionsForPlay = (rand.nextInt(3)); 
+			if(checkOptionsForPlay==0){
+				System.out.println("No play and Current Positio is "+currentPosition);
 
-			//Check if position is less or equal then position=0
-			if(currentPosition<=diceResult){
-				return currentPosition=0;
+			}else if(checkOptionsForPlay==1){
+				System.out.println("You got Snake and Current Positio is "+currentPosition);
+				diceResult=dieRoll();
+
+				//Check if Player's position is less or equal to 0, then position=0
+				if(currentPosition<=diceResult){
+					currentPosition=0;
+				}else{
+					currentPosition-=diceResult;
+				}
 			}else{
-				currentPosition-=diceResult;
+				System.out.println("You got Ladder and Current Positio is "+currentPosition);
+				diceResult=dieRoll();
+				currentPosition+=diceResult;
 			}
-		}else{
-			System.out.println("You got Ladder");
-			diceResult=dieRoll();
-			currentPosition+=diceResult;
 		}
 		return currentPosition;
 	}
 }
+
 
