@@ -1,6 +1,6 @@
 import java.util.Random;
 
-class SnakeAndLadder{
+class UC4{
 
    //variable declaration and Constants
    int currentPosition = 0;
@@ -9,7 +9,7 @@ class SnakeAndLadder{
 
    public static void main(String args[]){
 
-      SnakeAndLadder obj = new SnakeAndLadder();
+      UC4 obj = new UC4();
       System.out.println("Player is at Position : " + obj.checkOptions());
    }
 
@@ -57,3 +57,5 @@ class SnakeAndLadder{
       return currentPosition;
    }
 }
+
+
