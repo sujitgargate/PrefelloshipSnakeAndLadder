@@ -3,51 +3,68 @@ import java.util.Random;
 class SnakeAndLadder{
 
     //variable declaration and Constants
-    int currentPosition = 0;
+    int player1CurrentPosition;
+    int player2CurrentPosition;
     int diceResult = 0;
-    int diceRollCounter = 0;
-    int WINNINGPOSITION = 100;
+    public static final int WINNINGPOSITION = 100; //Made static so that it can be accessible from main()
 
     public static void main(String args[]){
 
         SnakeAndLadder obj = new SnakeAndLadder();
-        System.out.println("Player is at Position : " + obj.checkOptions());
+
+        //Player's position should be less than 100
+        while (obj.player1Position() < 100 && obj.player2Position() < 100){
+            obj.player1Position();
+            obj.player2Position();
+        }
+    }
+
+    //Finding player 1's Position
+    public int player1Position(){
+
+        player1CurrentPosition = checkOptions(player1CurrentPosition,1);
+        return player1CurrentPosition;
+    }
+
+    //Finding player 1's Position
+    public int player2Position(){
+        player2CurrentPosition = checkOptions(player2CurrentPosition,2);
+        return player2CurrentPosition;
     }
 
     //dieRoll() method will act as Thrown physical dice
     public int dieRoll(int rollLimit){
         Random rand = new Random();
         int diceRoll = (rand.nextInt(rollLimit)) + 1;
-
-		  // Dice counter gives How many times game was played.
-        diceRollCounter ++;
         return diceRoll;
     }
 
-    public int checkOptions() {
+    //Check options() will determine whether there is play or no play
+    public int checkOptions(int currentPosition, int player) {
 
-        //Here Player wont stop untill it's current Position is 100
-        while (currentPosition < WINNINGPOSITION) {
             int checkOptionsForPlay = dieRoll(3);
 
             switch (checkOptionsForPlay) {
+                //Case 1 is No Play
                 case 1:
-                    System.out.println("\nNo play and Current Position is " + currentPosition);
+                    System.out.println("\nPlayer "+ player + " No play and Current Position is " + currentPosition);
                     break;
 
+                // Case 2 is Snake Bite
                 case 2:
                     diceResult = dieRoll(6);
 
                     //Check if Player's position is less or equal to 0, then position=0
                     if (currentPosition <= diceResult) {
                         currentPosition = 0;
-                        System.out.println("\nYou got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
+                        System.out.println("\nPlayer "+ player + " got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
                     } else {
                         currentPosition -= diceResult;
-                        System.out.println("\nYou got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
+                        System.out.println("\nPlayer "+ player + " You got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
                     }
                     break;
 
+                //Case 3 is Ladder
                 case 3:
                     diceResult = dieRoll(6);
 
@@ -62,12 +79,15 @@ class SnakeAndLadder{
                         break;
                     } else {
                         currentPosition += diceResult;
-                        System.out.println("\nYou got Ladder with dice face of " + diceResult + " and Current Position is " + currentPosition);
+                        System.out.println("\nPlayer " + player +" got Ladder with dice face of " + diceResult + " and Current Position is " + currentPosition);
+
+                        //Checking Each Player's position which should be below Winning Position
+                        if(currentPosition == WINNINGPOSITION){
+                            System.out.println("\nPlayer "+ player + " won");
+                        }
                         break;
                     }
             }
-        }
-        System.out.println(+diceRollCounter+ "Counter");
         return currentPosition;
 
     }
