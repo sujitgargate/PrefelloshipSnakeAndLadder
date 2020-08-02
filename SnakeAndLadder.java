@@ -1,44 +1,47 @@
 import java.util.Random;
-class snakeAndLadder{
-	Random rand = new Random();
 
-	//variable declaration
-	int currentPosition=0;
-	int diceResult=0;
-	public static void main(String args[]){
+public class SnakeAndLadder{
 
-		snakeAndLadder obj=new snakeAndLadder();
-		System.out.println("Player is at Position : "+obj.checkOptions());
-	}
+   //variable declaration
+   int currentPosition = 0;
+   int diceResult = 0;
 
-	//dieRoll() method will act as Thrown dice
-	public int dieRoll(){
-		int diceRoll = (rand.nextInt(6))+1;
-		return diceRoll;
-	}
+   public static void main(String args[]){
+      SnakeAndLadder obj = new SnakeAndLadder();
+      System.out.println("Player is at Position : "+ obj.checkOptions());
+   }
 
-	public int checkOptions(){
-		//checkOptionsForPlay will tell that player got snake, ladder or No play
-		int checkOptionsForPlay = (rand.nextInt(3)); 
-		if(checkOptionsForPlay==0){
-			System.out.println("No play");
+   //dieRoll() method will act as Thrown physical dice
+   public int dieRoll(int rollLimit){
+      Random r = new Random();
+      int diceRoll = (r.nextInt(rollLimit)) + 1;
+      return diceRoll;
+   }
 
-		}else if(checkOptionsForPlay==1){
-			System.out.println("You got Snake");
-			diceResult=dieRoll();
+   //checkOptionsForPlay will tell that player got snake, ladder or No play
+   public int checkOptions(){
 
-			//Check if position is less or equal then position=0
-			if(currentPosition<=diceResult){
-				return currentPosition=0;
-			}else{
-				currentPosition-=diceResult;
-			}
-		}else{
-			System.out.println("You got Ladder");
-			diceResult=dieRoll();
-			currentPosition+=diceResult;
-		}
-		return currentPosition;
-	}
+      int checkOptionsForPlay = dieRoll(3);
+
+      switch(checkOptionsForPlay){
+
+         case 1:
+            System.out.println("No play");
+         break;
+
+         case 2:
+            System.out.println("You got Snake");
+            diceResult=dieRoll(6);
+            currentPosition -= diceResult;
+         break;
+
+         case 3:
+            System.out.println("You got Ladder");
+            diceResult = dieRoll(6);
+            currentPosition += diceResult;
+         break;
+
+      }
+      return currentPosition;
+   }
 }
-
